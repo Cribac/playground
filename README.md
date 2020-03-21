@@ -1,2 +1,2 @@
 # playground
-Proof of concepts and nonsense
+Proof of concepts and nonsense.
