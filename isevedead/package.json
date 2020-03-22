@@ -1,0 +1,11 @@
+{
+  "name": "isevedead",
+  "version": "1.0.0",
+  "description": "NodeJs CLI script to check the EVE Online server status.",
+  "main": "bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Christian Bachhelm (https://github.com/Cribac)",
+  "license": "GNU General Public License v3.0"
+}
