@@ -20,7 +20,7 @@ class FridayThirteenCounter
     res = []
     while birth_year <= end_year do
       date_obj = Time.new(birth_year, birth_month, 13)
-      res.push(date_obj) if date_obj.friday?
+      res << date_obj if date_obj.friday?
       birth_year += 1
     end
     res
