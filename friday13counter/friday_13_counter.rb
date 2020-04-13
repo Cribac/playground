@@ -1,3 +1,4 @@
+# Class to keep track of birthdays that happened on a friday the 13th.
 class FridayThirteenCounter
 
   attr_reader :birth_year, :birth_month, :end_year
@@ -8,12 +9,14 @@ class FridayThirteenCounter
     @end_year = end_year
   end
 
+  # @return Integer
   def amount
     calculate.length unless calculate.empty?
   end
 
   private
 
+  # @return Array
   def calculate
     end_year = @end_year || Time.new.year
     birth_year = @birth_year
