@@ -6,7 +6,7 @@ const Nodemailer = require('nodemailer');
 
 console.log('thera2stain connection search running, hit ctrl + c to stop...');
 
-const job = new CronJob('*/4 * * * *', function() {
+const job = new CronJob('0 */4 * * *', function() {
   Axios.get('https://www.eve-scout.com/api/wormholes', {
     params: {
       systemSearch: 'Jita',
