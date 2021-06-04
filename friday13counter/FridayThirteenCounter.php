@@ -15,11 +15,13 @@ class FridayThirteenCounter
     $this->endYear = $endYear;
   }
 
-  public function amount() {
+  public function amount(): int
+  {
     return count($this->calculate());
   }
 
-  private function calculate() {
+  private function calculate(): array
+  {
     $now = new DateTime('NOW');
     $end = $this->endYear > 0 ? $this->endYear : (int)$now->format('Y');
     $birthYear = $this->birthYear;
