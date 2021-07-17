@@ -14,7 +14,7 @@ console.log('thera2stain connection search running, hit ctrl + c to stop...');
 cron.add('0 */4 * * *', () => {
   const scoutData = fetchData(URL)
     .then((data) => {
-      const filtered = filterforStain(data);
+      const filtered = filterForStain(data);
 
       if (filtered.length > 0) {
 
@@ -50,7 +50,7 @@ function fetchData(url: string): Promise<{}> {
   return fetch(url).then((response) => response.json());
 }
 
-function filterforStain(data: any) {
+function filterForStain(data: any) {
   return data.filter((elem: any) => elem.destinationSolarSystem.region.name === 'Stain');
 }
 
