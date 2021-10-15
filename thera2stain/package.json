@@ -12,6 +12,6 @@
   "devDependencies": {
     "axios": "^0.21.2",
     "cron": "^1.8.2",
-    "nodemailer": "^6.4.16"
+    "nodemailer": "^6.7.0"
   }
 }
