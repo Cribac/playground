@@ -1,5 +1,7 @@
 import express from 'express'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import 'dotenv/config'
 
 // init express
 const app = express()
@@ -11,11 +13,25 @@ const users = [
   { id: 1, username: 'fooberto', password: 'password' },
   { id: 2, username: 'barberto', password: '12345678' },
   { id: 3, username: 'bazberta', password: 'password123' },
-] 
+]
+
+// dummy posts; we'll use a database in production
+const posts = [
+  { id: 1, username: 'fooberto', title: 'Post 1 Hello World' },
+  { id: 2, username: 'barberto', title: 'Post 2' },
+  { id: 3, username: 'bazberta', title: 'Post 3' },
+]
 
 // user route; we won't want to expose this in production
 app.get('/users', (req, res) => {
   res.json(users)
+})
+
+// post route;
+// we'll use jwt to authenticate the user before allowing access to this route
+app.get('/posts', authenticateToken, (req, res) => {
+  console.log(req.user)
+  res.json(posts.filter(post => post.username === req.user.username))
 })
 
 // user creation route
@@ -43,7 +59,9 @@ app.post('/users/login', async (req, res) => {
   if (user) {
     try {
       if (await bcrypt.compare(password, user.password)) {
-        res.send('Login successful')
+        // authenticate via jwt
+        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+        res.send({ accessToken })
       } else {
         res.send('Login failed')
       }
@@ -55,6 +73,22 @@ app.post('/users/login', async (req, res) => {
     res.status(400).send('User not found')
   }
 })
+
+// jwt token authentication middleware
+function authenticateToken(req, res, next) {
+  // get the token from the header: "Bearer <token>"
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+
+  // if no token, send 401
+  if (token === null) return res.sendStatus(401)
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403) // invalid token or expired token, send 403 
+    req.user = user
+    next()
+  })
+}
 
 app.listen(3333, () => {
   console.log('Server is running on port 3333')
