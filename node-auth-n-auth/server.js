@@ -1,6 +1,8 @@
 import express from 'express'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import mongoose from 'mongoose'
+import config from './config/config.js'
 import 'dotenv/config'
 
 // init express
@@ -90,6 +92,18 @@ function authenticateToken(req, res, next) {
   })
 }
 
-app.listen(3333, () => {
-  console.log('Server is running on port 3333')
-})
+// connect to db and start server
+try {
+  const { host, port, name } = config.db
+  const MONGOURI = `mongodb://${host}:${port}/${name}`
+  const connection = await mongoose.connect(MONGOURI)
+  if (connection) {
+    console.log('[App] connected to database')
+    const PORT = config.app.port
+    app.listen(PORT, () => {
+      console.info('[App] server is running on port 3333')
+    })
+  }
+} catch(err) {
+  console.error('[App] could not connect to DB', err)
+}
