@@ -3,19 +3,13 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 import config from './config/config.js'
+import User from './models/user/User.js'
 import 'dotenv/config'
 
 // init express
 const app = express()
 // allow express to use json
 app.use(express.json())
-
-// dummy users; we'll use a database in production
-const users = [
-  { id: 1, username: 'fooberto', password: 'password' },
-  { id: 2, username: 'barberto', password: '12345678' },
-  { id: 3, username: 'bazberta', password: 'password123' },
-]
 
 // dummy posts; we'll use a database in production
 const posts = [
@@ -25,7 +19,9 @@ const posts = [
 ]
 
 // user route; we won't want to expose this in production
-app.get('/users', (req, res) => {
+app.get('/users', async (req, res) => {
+  const users = await User.find().lean()
+  console.log(users)
   res.json(users)
 })
 
@@ -38,15 +34,19 @@ app.get('/posts', authenticateToken, (req, res) => {
 
 // user creation route
 app.post('/users', async (req, res) => {
-  const { username, password } = req.body
+  const { username, email, password } = req.body
   try {
-    const id = users.length + 1
-    
     // salt and hash the password
     const salt = await bcrypt.genSalt()
     const hashedPassword = await bcrypt.hash(password, salt)
     
-    users.push({ id, username, password: hashedPassword })
+    // create a new user
+    const user = new User({ 
+      username,
+      email, 
+      password: hashedPassword
+    })
+    await user.save()
     res.status(201).send('User created successfully')
   } catch(err) {
     console.log(err)
@@ -99,9 +99,9 @@ try {
   const connection = await mongoose.connect(MONGOURI)
   if (connection) {
     console.log('[App] connected to database')
-    const PORT = config.app.port
-    app.listen(PORT, () => {
-      console.info('[App] server is running on port 3333')
+    const { port } = config.app
+    app.listen(port, () => {
+      console.info('[App] server is running on port:', port)
     })
   }
 } catch(err) {

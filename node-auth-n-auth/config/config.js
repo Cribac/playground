@@ -2,7 +2,7 @@ import 'dotenv/config'
 
 const config = {
   app: {
-    port: process.env.PORT,
+    port: process.env.APP_PORT,
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
     refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET,
   },
