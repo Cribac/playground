@@ -1,0 +1,13 @@
+.centered {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.centered > * {
+  margin: 0 auto;
+}
+
+.orbitron {
+  font-family: 'Orbitron', sans-serif;
+}
