@@ -1,11 +1,29 @@
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 .centered {
   display: flex;
   align-items: center;
-  flex-direction: column;
 }
 
 .centered > * {
   margin: 0 auto;
+}
+
+.messages {
+  display: flex;
+  justify-content: space-between;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.row {
+  flex-direction: row;
 }
 
 .orbitron {
