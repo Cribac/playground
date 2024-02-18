@@ -6,16 +6,7 @@
 
 .centered {
   display: flex;
-  align-items: center;
-}
-
-.centered > * {
   margin: 0 auto;
-}
-
-.messages {
-  display: flex;
-  justify-content: space-between;
 }
 
 .column {
@@ -26,6 +17,30 @@
   flex-direction: row;
 }
 
+.messages {
+  display: flex;
+  justify-content: space-between;
+}
+
+.message {
+  max-width: 300px;
+  flex-grow: 1;
+  padding: 0 10px;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.left {
+  text-align: left;
+  background-color: bisque;
+}
+
 .orbitron {
   font-family: 'Orbitron', sans-serif;
+}
+
+h1.orbitron {
+  text-align: center;
 }
