@@ -13,7 +13,7 @@ app.use(express.json())
 
 // dummy posts; we'll use a database in production
 const posts = [
-  { id: 1, username: 'fooberto', title: 'Post 1 Hello World' },
+  { id: 1, username: 'foobertotest', title: 'Post 1 Hello World' },
   { id: 2, username: 'barberto', title: 'Post 2' },
   { id: 3, username: 'bazberta', title: 'Post 3' },
 ]
@@ -21,7 +21,6 @@ const posts = [
 // user route; we won't want to expose this in production
 app.get('/users', async (req, res) => {
   const users = await User.find().lean()
-  console.log(users)
   res.json(users)
 })
 
@@ -56,8 +55,8 @@ app.post('/users', async (req, res) => {
 
 // user login route
 app.post('/users/login', async (req, res) => {
-  const { username, password } = req.body
-  const user = users.find(user => user.username === username)
+  const { email, password } = req.body
+  const user = await User.findOne({ email }).lean()
   if (user) {
     try {
       if (await bcrypt.compare(password, user.password)) {
