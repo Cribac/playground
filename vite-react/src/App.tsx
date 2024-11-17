@@ -1,5 +1,5 @@
 import './global.css'
-import Hello from './components/Hello'
+import Hello from './components/CursorContainer'
 
 function App() {
   return (

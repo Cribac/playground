@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function Hello() {
+export default function CursorContainer() {
   const [position, setPosition] = useState({
     isLeftHalf: false,
     isRightHalf: false
