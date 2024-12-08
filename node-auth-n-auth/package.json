@@ -20,5 +20,6 @@
   },
   "devDependencies": {
     "nodemon": "3.0.3"
-  }
+  },
+  "packageManager": "pnpm@9.15.0+sha1.8bfdb6d72b4d5fdf87d21d27f2bfbe2b21dd2629"
 }
