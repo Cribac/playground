@@ -1,0 +1,21 @@
+services:
+  reverse-proxy:
+    image: traefik:v3.2.3
+    command: --api.insecure=true --providers.docker
+    ports:
+      # The http port
+      - "80:80"
+      # https
+      - "443:443"
+      # traefik web ui (enabled by --api.insecure)
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+  
+  whoami:
+    # test container to expose an API to show it's IP address
+    image: traefik/whoami
+    labels:
+      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
+
