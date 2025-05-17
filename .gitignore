@@ -135,3 +135,5 @@ pnpm-debug.log*
 .env.production
 .DS_Store
 
+treafik-tryout/letsencrypt/*
+
