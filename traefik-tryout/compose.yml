@@ -1,7 +1,21 @@
+# CertResolver: Defines the process Traefik uses to obtain certificates. 
+# Replace myresolver with a name that suits your setup.
+# Email: Used by Let’s Encrypt to contact you about expiring certificates 
+# and other issues.
+# Storage: Specifies the location where certificates are stored.
+
 services:
   reverse-proxy:
     image: traefik:v3.2.3
-    command: --api.insecure=true --providers.docker
+    command: 
+      - "--api=true"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=acmetest@example.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
       # The http port
       - "80:80"
@@ -12,10 +26,13 @@ services:
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./letsencrypt:/letsencrypt
   
   whoami:
     # test container to expose an API to show it's IP address
     image: traefik/whoami
     labels:
-      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.acme.com`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
 
