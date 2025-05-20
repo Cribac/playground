@@ -2,5 +2,9 @@
   "HomePage": {
     "title": "Next.js Testbett",
     "description": "Next.js Testbett"
+  },
+  "LocaleSwitcher": {
+    "label": "Sprache wählen",
+    "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unbekannt}}"
   }
 }
