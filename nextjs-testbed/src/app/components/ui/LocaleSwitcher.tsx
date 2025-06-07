@@ -15,6 +15,7 @@ export default function LocaleSwitcher() {
         <option
           key={cur}
           value={cur}
+          className='cursor-pointer'
         >
           {t('locale', { locale: cur })}
         </option>
