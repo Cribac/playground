@@ -2,11 +2,19 @@ import Image from 'next/image'
 import { Locale, useTranslations } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { use } from 'react'
+import MainNav from '@/app/components/navigation/MainNav'
 import LocaleSwitcher from '@/app/components/ui/LocaleSwitcher'
+import { Main } from 'next/document'
 
 type Props = {
   params: Promise<{ locale: Locale }>
 }
+
+const NAV_ITEMS = [
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Contact', href: '/contact' },
+]
 
 export default function Home({ params }: Props) {
   const { locale } = use(params)
@@ -17,6 +25,7 @@ export default function Home({ params }: Props) {
     <div className='grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]'>
       <main className='flex flex-col gap-[32px] row-start-2 items-center sm:items-start'>
         <LocaleSwitcher />
+        <MainNav navItems={NAV_ITEMS} />
         <Image
           className='dark:invert'
           src='/next.svg'
