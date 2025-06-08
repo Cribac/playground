@@ -11,7 +11,7 @@ type Props = {
 
 const NAV_ITEMS = [
   { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
+  { name: 'carousel', href: '/carousel' },
   { name: 'Contact', href: '/contact' },
 ]
 
