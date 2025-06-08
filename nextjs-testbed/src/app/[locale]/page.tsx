@@ -4,7 +4,6 @@ import { setRequestLocale } from 'next-intl/server'
 import { use } from 'react'
 import MainNav from '@/app/components/navigation/MainNav'
 import LocaleSwitcher from '@/app/components/ui/LocaleSwitcher'
-import { Main } from 'next/document'
 
 type Props = {
   params: Promise<{ locale: Locale }>
